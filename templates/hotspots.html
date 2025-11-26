@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1 class="page-title">Hotspot Data Explorer</h1>
+  <p class="page-subtitle">
+    Explore premium, luxury, and ultra luxury clusters along with neighborhood investment scores and full listings.
+  </p>
+</section>
+
+<section class="glass-panel card">
+  <label for="city-select-hotspot" class="form-label">Select City</label>
+  <select id="city-select-hotspot" class="input"></select>
+</section>
+
+<section class="glass-panel card">
+  <div class="tabs">
+    <button data-tab="premium" class="tab active">Premium Clusters</button>
+    <button data-tab="luxury" class="tab">Luxury</button>
+    <button data-tab="ultra" class="tab">Ultra Luxury</button>
+    <button data-tab="neighborhoods" class="tab">Neighborhood Scores</button>
+    <button data-tab="listings" class="tab">Full Listings</button>
+  </div>
+
+  <div id="tab-content"></div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hotspots.js') }}"></script>
+{% endblock %}

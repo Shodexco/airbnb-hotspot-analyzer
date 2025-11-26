@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ sidebarOpen: false }">
+<head>
+  <meta charset="UTF-8" />
+  <title>Airbnb Hotspot Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- HTMX + Alpine -->
+  <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+
+<body class="app-body">
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar glass-panel" :class="{ 'sidebar-open': sidebarOpen }">
+      <div class="sidebar-brand">
+        <span class="brand-icon">🏠</span>
+        <span class="brand-text">Airbnb Analyzer</span>
+      </div>
+
+      <nav class="sidebar-nav">
+
+        <!-- DASHBOARD -->
+        <a href="{{ url_for('index') }}"
+           class="nav-link {% if request.path == '/' %}active{% endif %}">
+          Dashboard
+        </a>
+
+        <!-- HOTSPOTS -->
+        <a href="{{ url_for('hotspots_page') }}"
+           class="nav-link {% if request.path.startswith('/hotspots') %}active{% endif %}">
+          Hotspots
+        </a>
+
+        <!-- MAPS -->
+        <a href="{{ url_for('maps_page') }}"
+           class="nav-link {% if request.path.startswith('/maps') %}active{% endif %}">
+          Maps
+        </a>
+
+        <!-- API TESTER -->
+        <a href="{{ url_for('api_tester_page') }}"
+           class="nav-link {% if request.path.startswith('/api-tester') %}active{% endif %}">
+          API Tester
+        </a>
+
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main">
+      <header class="topbar glass-panel">
+        <button class="topbar-menu-btn" @click="sidebarOpen = !sidebarOpen">
+          ☰
+        </button>
+        <div class="topbar-title">Airbnb Hotspot Analyzer</div>
+        <div class="topbar-meta">
+          <span class="badge badge-gradient">Glass Dashboard</span>
+        </div>
+      </header>
+
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

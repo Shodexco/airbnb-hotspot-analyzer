@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <div>
+    <h1 class="page-title">Analysis Results</h1>
+    <p class="page-subtitle">
+      This page can be wired later for server-side rendered results. For now,
+      use the Dashboard to view stats, logs, and maps.
+    </p>
+  </div>
+</section>
+
+<section class="glass-panel card">
+  <p class="section-hint">
+    Current flow:
+  </p>
+  <ul class="info-list">
+    <li>The Dashboard calls <code>/api/analyze</code> via fetch.</li>
+    <li>JSON response is rendered client-side.</li>
+    <li>Maps are embedded directly using iframes.</li>
+  </ul>
+</section>
+{% endblock %}

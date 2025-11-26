@@ -1,0 +1,90 @@
+========================================================================
+AIRBNB PRICE HOTSPOT ANALYZER
+========================================================================
+========================================================================
+FETCHING LISTINGS FOR BOSTON (boston)
+========================================================================
+========================================================================
+DETECTING LATEST SNAPSHOT
+========================================================================
+Loading index page: https://insideairbnb.com/get-the-data/
+Detected latest snapshot for Boston: 2025-09-23
+Using download URL: https://data.insideairbnb.com/united-states/ma/boston/2025-09-23/data/listings.csv.gz
+OK - loaded 4,419 listings from snapshot 2025-09-23
+========================================================================
+STEP 1 - DATA PREPARATION
+========================================================================
+Converting price column to numeric dollars.
+Cleaned listings: 4,419 -> 3,463
+Price range: 26 - 2238 dollars per night
+Median price: 203 dollars per night
+========================================================================
+STEP 2 - LANDMARK PROXIMITY
+========================================================================
+Computing distance in meters to nearest landmark (this can take a while).
+Price by distance bucket (mean / median / count):
+                    mean  median  count
+distance_cat                           
+<2km          302.120000   256.5    450
+2-5km         264.709210   216.0   1379
+5-10km        222.056532   179.0   1309
+>10km         177.356923   131.0    325
+========================================================================
+STEP 3 - PREMIUM HOTSPOT DETECTION
+========================================================================
+Premium band: 200 - 1000 dollars per night.
+Premium listings: 1,742 (50.3 percent of total)
+Premium: DBSCAN finished. Clusters found (excluding noise): 12
+Top premium clusters (by average price):
+    cluster_id  listing_count   avg_price
+10          10             33  574.212121
+8            8             20  447.950000
+3            3             12  390.416667
+1            1            123  367.471545
+2            2             15  363.400000
+========================================================================
+STEP 3B - LUXURY HOTSPOT DETECTION
+========================================================================
+Luxury band: 1000 - 2500 dollars per night.
+Luxury listings: 34 (1.0 percent of total)
+Luxury: DBSCAN finished. Clusters found (excluding noise): 0
+No dense luxury clusters found.
+========================================================================
+STEP 3C - ULTRA LUXURY HOTSPOT DETECTION
+========================================================================
+Ultra Luxury band: 2500 - 5001 dollars per night.
+Ultra Luxury listings: 0 (0.0 percent of total)
+No ultra luxury listings found in this band.
+========================================================================
+STEP 4 - NEIGHBORHOOD INVESTMENT SCORES
+========================================================================
+Top neighborhoods by investment score:
+                        investment_score       price  listing_count
+neighbourhood_cleansed                                             
+Downtown                            75.8  378.913669            278
+Longwood Medical Area               74.0  514.750000              4
+Fenway                              68.1  295.989848            197
+South End                           66.8  284.574163            209
+Bay Village                         65.0  319.681818             66
+Jamaica Plain                       63.8  277.094444            180
+Back Bay                            63.2  324.566225            302
+Charlestown                         62.7  301.419355             62
+Chinatown                           61.1  362.000000             30
+South Boston                        58.1  270.209790            143
+========================================================================
+STEP 5 - MAP CREATION
+========================================================================
+Added heatmap with 3463 sample listings.
+Added 12 premium cluster markers.
+No luxury clusters to show on the map.
+No ultra luxury clusters to show on the map.
+Added 1 landmark markers.
+Map saved to: maps\boston_2025-09-23_min200.html
+========================================================================
+STEP 6 - EXPORTING CSV OUTPUTS
+========================================================================
+Saved main analyzed data to output\boston_2025-09-23_min200_analyzed_data.csv
+Saved premium clusters to output\boston_2025-09-23_min200_premium_clusters.csv
+No luxury clusters CSV exported (no clusters).
+No ultra luxury clusters CSV exported (no clusters).
+Saved neighborhood scores to output\boston_2025-09-23_min200_neighborhood_scores.csv

@@ -1,0 +1,67 @@
+========================================================================
+AIRBNB PRICE HOTSPOT ANALYZER
+========================================================================
+========================================================================
+FETCHING LISTINGS FOR NEW YORK CITY (nyc)
+========================================================================
+Trying snapshot: 2025-09-01
+  OK - loaded 36,178 listings from 2025-09-01
+========================================================================
+STEP 1 - DATA PREPARATION
+========================================================================
+Converting price column to numeric dollars.
+Cleaned listings: 36,178 -> 20,649
+Price range: 10 - 999 dollars per night
+Median price: 150 dollars per night
+========================================================================
+STEP 2 - LANDMARK PROXIMITY
+========================================================================
+Computing distance in meters to nearest landmark (this can take a while).
+Price by distance bucket (mean / median / count):
+                    mean  median  count
+distance_cat                           
+<2km          311.895236   249.0   4954
+2-5km         258.034251   194.0   4613
+5-10km        145.808165   113.0   5781
+>10km         127.225618   100.0   5301
+========================================================================
+STEP 3 - PREMIUM HOTSPOT DETECTION
+========================================================================
+Premium threshold: 200 dollars per night.
+Premium listings: 7,409 (35.9 percent of total)
+DBSCAN finished. Clusters found (excluding noise): 39
+Top premium clusters (by average price):
+    cluster_id  listing_count   avg_price
+38          38              9  701.888889
+32          32             19  523.315789
+0            0           4009  417.567473
+27          27              4  410.500000
+9            9             12  407.750000
+========================================================================
+STEP 4 - NEIGHBORHOOD INVESTMENT SCORES
+========================================================================
+Top neighborhoods by investment score:
+                        investment_score       price  listing_count
+neighbourhood_cleansed                                             
+DUMBO                               67.2  270.615385             13
+Tribeca                             65.1  496.238636             88
+Flatiron District                   64.7  344.547619             42
+Theater District                    64.2  438.402778            216
+NoHo                                64.1  441.631579             19
+SoHo                                61.9  418.345133            113
+Battery Park City                   60.3  291.000000             17
+Cobble Hill                         59.8  323.952381             21
+Financial District                  59.1  379.900568            352
+West Village                        58.7  410.447368            228
+========================================================================
+STEP 5 - MAP CREATION
+========================================================================
+Added heatmap with 5000 sample listings.
+Added 39 premium cluster markers.
+Map saved to: maps\nyc.html
+========================================================================
+STEP 6 - EXPORTING CSV OUTPUTS
+========================================================================
+Saved analyzed data to output\nyc_data.csv
+Saved premium clusters to output\nyc_clusters.csv
+Saved neighborhood scores to output\nyc_neighborhoods.csv

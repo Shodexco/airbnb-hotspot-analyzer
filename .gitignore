@@ -1,4 +1,21 @@
-venv/
-*.pyc
+# Python
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+.venv/
+env/
+
+# Generated output
+maps/
+output/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
 .DS_Store
+Thumbs.db

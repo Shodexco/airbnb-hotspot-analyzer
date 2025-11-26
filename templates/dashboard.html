@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- PAGE HEADER -->
+<section class="page-header">
+  <div>
+    <h1 class="page-title">City Price Hotspots</h1>
+    <p class="page-subtitle">
+      Select a city and analyze premium, luxury, and ultra-luxury Airbnb clusters.
+    </p>
+  </div>
+</section>
+
+<!-- ANALYSIS FORM -->
+<section class="glass-panel card">
+  <form id="analyzer-form" class="form-grid">
+    <div class="form-group">
+      <label for="city-select">City</label>
+      <select id="city-select" class="input">
+        <option value="">Loading cities...</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="threshold-input">Premium threshold ($ per night)</label>
+      <input
+        id="threshold-input"
+        type="number"
+        class="input"
+        min="50"
+        step="10"
+        value="200"
+      />
+    </div>
+
+    <div class="form-group form-group-button">
+      <button id="run-btn" type="submit" class="btn btn-primary">
+        Run Analysis
+      </button>
+    </div>
+  </form>
+</section>
+
+<!-- SUMMARY PANEL -->
+<section id="summary-section" class="summary-section hidden">
+  <div class="section-header">
+    <h2 class="section-title">Summary</h2>
+    <span class="section-meta" id="summary-city-label"></span>
+  </div>
+
+  <!-- EXPORTS -->
+  <div class="card export-panel">
+    <h3 class="section-subtitle">Export Results</h3>
+
+    <div class="export-grid">
+      <a class="export-btn" id="export-data" href="#">⬇ Full Listings</a>
+      <a class="export-btn" id="export-premium" href="#">⬇ Premium Clusters</a>
+      <a class="export-btn" id="export-luxury" href="#">⬇ Luxury Clusters</a>
+      <a class="export-btn" id="export-ultra" href="#">⬇ Ultra Luxury Clusters</a>
+      <a class="export-btn" id="export-neighborhoods" href="#">⬇ Neighborhood Scores</a>
+      <a class="export-btn" id="export-log" href="#">⬇ Log File</a>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="stats-grid">
+    <div class="stat-card glass-panel">
+      <div class="stat-label">Total Listings</div>
+      <div class="stat-value" data-stat="listings">-</div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="stat-label">Median Price</div>
+      <div class="stat-value" data-stat="median">$-</div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="stat-label">Premium Threshold</div>
+      <div class="stat-value" data-stat="threshold">$-</div>
+    </div>
+
+    <div class="stat-card glass-panel">
+      <div class="stat-label">Premium Clusters</div>
+      <div class="stat-value" data-stat="clusters">-</div>
+    </div>
+  </div>
+</section>
+
+<!-- LOG + MAP -->
+<section class="layout-grid">
+  <section class="glass-panel card">
+    <h3 class="section-subtitle">Analyzer Log</h3>
+    <pre class="log-output" id="log-output">Run an analysis to see logs here.</pre>
+  </section>
+
+  <section class="glass-panel card" id="map-card">
+    <h3 class="section-subtitle">Interactive Map</h3>
+    <p class="section-hint" id="map-hint">
+      After running an analysis, your interactive hotspot map will load here.
+    </p>
+    <iframe id="map-frame" class="map-frame hidden"></iframe>
+    <a id="map-link" class="map-link hidden" href="#" target="_blank">
+      Open full-screen map
+    </a>
+  </section>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

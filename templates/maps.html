@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1 class="page-title">Map Gallery</h1>
+  <p class="page-subtitle">
+    Browse all hotspot maps generated from your analyses.
+  </p>
+</section>
+
+<section class="glass-panel card">
+  <label for="city-select" class="form-label">Select City</label>
+  <select id="city-select" class="input"></select>
+</section>
+
+<section id="gallery" class="gallery-grid"></section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+{% endblock %}

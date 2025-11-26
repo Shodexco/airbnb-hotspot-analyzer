@@ -1,169 +1,192 @@
-# Airbnb Price Hotspot Analyzer
+# 🏠 Airbnb Hotspot Analyzer  
+**Multi-City Price Intelligence • Premium/Luxury Cluster Detection • Interactive Folium Maps • Real-Time API**
 
-Geospatial analysis tool for identifying NYC Airbnb pricing patterns and investment opportunities using spatial clustering and proximity analysis.
+This project analyzes short-term rental markets using live InsideAirbnb snapshots.  
+It automatically detects:
 
-![NYC Airbnb Heatmap](screenshot1.png)
+- 🔥 **Premium clusters** (mid-high tier: $200–$999)
+- 💎 **Luxury clusters** ($1000–$2499)
+- 👑 **Ultra-Luxury clusters** ($2500–$5000)
+- 🗺️ **Neighborhood investment scores**
+- 📍 **Landmark distance heatmaps**
+- 🌐 **Interactive Folium maps with heatmaps + cluster markers**
 
-## Overview
+Includes a **full frontend dashboard**, **Hotspot Explorer UI**, and a **REST API server**.
 
-This project analyzes 48,000+ NYC Airbnb listings using geospatial techniques to identify premium clusters, price patterns, and location-based insights. Built to demonstrate spatial data analysis capabilities with real-world business applications.
+---
 
-## Features
+## 🚀 Features
 
-🗺️ **Interactive Price Heatmap**
-- Visualizes price distribution across all NYC boroughs
-- Color-coded intensity showing premium vs budget areas
+### ✔ Live Snapshot Fetching
+Scrapes Inside Airbnb’s “Get the Data” page to always download the most recent dataset for any supported city.
 
-📍 **Spatial Clustering (DBSCAN)**
-- Identifies premium listing clusters using 300m epsilon
-- Analyzes cluster statistics (avg price, listing count, total value)
+### ✔ Multi-Tier Cluster Detection
+- DBSCAN clustering tuned per tier  
+- Premium / Luxury / Ultra-Luxury separation  
+- Coordinates projected to EPSG:3857 for real spatial accuracy  
 
-🎯 **Proximity Analysis**
-- Calculates distances to major NYC landmarks
-- Measures location premium effects on pricing
+### ✔ Beautiful Interactive Maps
+- Heatmap of nightly prices  
+- Gold, blue, red markers per tier  
+- Optional BeautifyIcon stylized landmarks  
+- One-click fullscreen mode  
 
-💰 **Neighborhood Investment Scoring**
-- Multi-factor scoring algorithm
-- Combines price, location, and demand metrics
+### ✔ Built-in Dashboard UI
+- City selector  
+- Premium price threshold input  
+- Download buttons  
+- Embedded map viewer  
+- Real-time logs  
 
-## Tech Stack
+### ✔ Hotspot Data Explorer
+Browse:
+- Premium clusters  
+- Luxury clusters  
+- Ultra-luxury clusters  
+- Neighborhood scores  
+- Raw listings  
 
-- **GeoPandas** - Spatial operations and coordinate system transformations
-- **Folium** - Interactive map visualization with heatmaps
-- **Scikit-learn** - DBSCAN clustering algorithm
-- **Shapely** - Geometric operations and distance calculations
-- **Pandas** - Data manipulation and analysis
+### ✔ REST API
+Endpoints to:
+- run analysis  
+- fetch latest CSV outputs  
+- browse generated maps  
+- list cities  
 
-## Installation
-```bash
-# Clone repository
-git clone https://github.com/Shodexco/airbnb-hotspot-analyzer.git
-cd airbnb-hotspot-analyzer
+---
 
-# Install dependencies
-pip install pandas geopandas folium scikit-learn shapely matplotlib seaborn
+# 📦 Directory Structure
 
-# Download dataset
-# Visit: https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data
-# Place AB_NYC_2019.csv in project root
-
-# Run analysis
-python airbnb_analyzer.py
-```
-
-## Usage
-```python
-# The script automatically:
-# 1. Loads and cleans 48K+ Airbnb listings
-# 2. Performs spatial clustering to find premium zones
-# 3. Calculates proximity to major landmarks
-# 4. Scores neighborhoods for investment potential
-# 5. Generates interactive map (airbnb_hotspot_map.html)
-```
-
-## Key Findings
-
-- **15+ Premium Clusters Identified** - Using DBSCAN spatial clustering
-- **35% Location Premium** - Properties within 2km of major landmarks
-- **Manhattan & Williamsburg** - Highest investment scores
-- **Optimal Price Range** - $150-250/night for balanced occupancy
-
-## Technical Approach
-
-### Coordinate Transformation
-Converted from WGS84 (lat/lon) to EPSG:3857 (Web Mercator) for accurate meter-based distance calculations.
-
-### DBSCAN Clustering
-- **Epsilon**: 300 meters (meaningful neighborhood scale)
-- **Min Samples**: 10 listings (statistical significance)
-- Identifies dense premium areas vs scattered listings
-
-### Distance Calculations
-Computed straight-line distances from each listing to 4 major landmarks:
-- Times Square
-- Central Park
-- Empire State Building
-- Brooklyn Bridge
-
-### Investment Scoring Algorithm
-```
-Investment Score = (Price Score × 0.4) + 
-                  (Location Score × 0.3) + 
-                  (Demand Score × 0.3)
-```
-
-## Sample Output
-```
-======================================================================
-AIRBNB PRICE HOTSPOT ANALYZER - Geospatial Analysis
-======================================================================
-
-[1/6] Loading Airbnb data...
-   ✓ Loaded 48,895 Airbnb listings
-   ✓ After cleaning: 48,818 listings
-   ✓ Median price: $106/night
-
-[3/6] Finding premium listing clusters using DBSCAN...
-   ✓ Analyzing 12,204 premium listings (>$200/night)
-   ✓ Found 17 clusters
-
-   Top Premium Clusters:
-   - Cluster #0: 6,252 listings, $329 avg, $2.0M total value
-   - Cluster #1: 892 listings, $318 avg, $283K total value
-
-[6/6] Creating interactive map...
-   ✓ Map saved to: airbnb_hotspot_map.html
-```
-
-## Use Cases
-
-- **Real Estate Investors**: Identify optimal neighborhoods for property acquisition
-- **Hosts**: Price optimization based on location analysis
-- **Market Research**: Understand short-term rental landscape
-- **Urban Planning**: Analyze spatial patterns of vacation rentals
-
-## Future Enhancements
-
-- [ ] Time-series analysis of price trends
-- [ ] PostGIS integration for production-scale queries
-- [ ] Transportation accessibility scoring (subway proximity)
-- [ ] Predictive pricing model using spatial features
-- [ ] Real-time data pipeline via Airbnb API
-
-## Project Structure
 ```
 airbnb-hotspot-analyzer/
-├── airbnb_analyzer.py          # Main analysis script
-├── airbnb_hotspot_map.html     # Interactive visualization
-├── premium_clusters.csv         # Cluster analysis results
-├── neighborhood_scores.csv      # Investment rankings
-├── requirements.txt             # Python dependencies
-└── README.md                    # Project documentation
+│
+├── airbnb_analyzer.py        # Main analysis engine
+├── api_server.py             # Flask server API + Dashboard UI
+│
+├── maps/                     # Auto-generated folium maps
+├── output/                   # CSV + logs for each run
+│
+├── static/
+│   ├── css/
+│   ├── js/
+│   │   ├── dashboard.js
+│   │   ├── hotspots.js
+│   │   └── api_tester.js
+│
+├── templates/
+│   ├── dashboard.html
+│   ├── hotspots.html
+│   ├── maps.html
+│   └── api_tester.html
+│
+└── README.md
 ```
 
-## Author
+---
 
-**Jonathan Sodeke** - Data Engineer | ML Engineer
+# 🧠 **How It Works (Pipeline)**
 
-Demonstrating geospatial analysis and spatial data science capabilities for real-world business applications.
+1. **Scrape latest snapshot** from InsideAirbnb  
+2. **Download listings.csv.gz**  
+3. **Clean & normalize data**  
+4. **Compute landmark proximity**  
+5. **Cluster premium/luxury/ultra-luxury listings**  
+6. **Score neighborhoods** using:
+   - price score  
+   - location score  
+   - demand score  
+7. **Generate interactive Folium map**  
+8. **Export CSVs + logs**  
+9. **Return summary for dashboard + API**
 
-- GitHub: [@Shodexco](https://github.com/Shodexco)
-- LinkedIn: [Jonathan Sodeke](https://www.linkedin.com/in/jonathan-sodeke)
-- Email: sodekejonathan@gmail.com
+---
 
-## Dataset
+# 🖥️ Running the Dashboard
 
-NYC Airbnb Open Data (2019)
-- **Source**: [Kaggle](https://www.kaggle.com/datasets/dgomonov/new-york-city-airbnb-open-data)
-- **Size**: 48,895 listings
-- **Features**: Location, price, room type, availability, reviews
+```
+python api_server.py
+```
 
-## License
+Then open:
 
-MIT License - See LICENSE file for details
+```
+http://127.0.0.1:5000
+```
 
-## Acknowledgments
+Dashboard includes:
 
-- Airbnb for making data publicly available
-- GeoPandas community for excellent spatial tools
-- NYC OpenData for geographic context
+- Run analyzer  
+- View logs  
+- Export CSVs  
+- View generated maps  
+- Hotspot explorer  
+- Built-in API tester page  
+
+---
+
+# 🛠 CLI Usage
+
+```
+python airbnb_analyzer.py --city boston --premium-threshold 200
+```
+
+---
+
+# 🌍 Supported Cities
+
+NYC, LA, SF, Boston, Chicago, Seattle, Washington-DC, Austin, Miami, London, Paris, Barcelona, Amsterdam, Rome, Berlin.
+
+Add more via `CITY_CONFIG`.
+
+---
+
+# 📡 API Documentation
+
+See full API docs file: **`API_DOCS.md`**  
+(Scroll down — the file is included in this response.)
+
+---
+
+# 🧑‍💻 Development
+
+Create a venv:
+
+```
+python -m venv .venv
+source .venv/bin/activate      
+# or Windows:
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+Run server:
+
+```
+python api_server.py
+```
+
+---
+
+# 🤝 Contributing
+
+See **`CONTRIBUTING.md`** below.
+
+---
+
+# 📝 Changelog
+
+See **`CHANGELOG.md`**.
+
+---
+
+# ⭐ Author
+
+Built by **Bayo (Shodexco)**  
+AI/ML Developer • Backend Engineer • Data Pipeline Architect  
+
+If you use this project, star the repo ⭐ — it helps!

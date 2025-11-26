@@ -1,0 +1,99 @@
+========================================================================
+AIRBNB PRICE HOTSPOT ANALYZER
+========================================================================
+========================================================================
+FETCHING LISTINGS FOR CHICAGO (chicago)
+========================================================================
+========================================================================
+DETECTING LATEST SNAPSHOT
+========================================================================
+Loading index page: https://insideairbnb.com/get-the-data/
+Detected latest snapshot for Chicago: 2025-06-17
+Using download URL: https://data.insideairbnb.com/united-states/il/chicago/2025-06-17/data/listings.csv.gz
+OK - loaded 8,604 listings from snapshot 2025-06-17
+========================================================================
+STEP 1 - DATA PREPARATION
+========================================================================
+Converting price column to numeric dollars.
+Cleaned listings: 8,604 -> 7,620
+Price range: 13 - 5000 dollars per night
+Median price: 168 dollars per night
+========================================================================
+STEP 2 - LANDMARK PROXIMITY
+========================================================================
+Computing distance in meters to nearest landmark (this can take a while).
+Price by distance bucket (mean / median / count):
+                    mean  median  count
+distance_cat                           
+<2km          364.925373   288.0    737
+2-5km         387.644150   281.0   1436
+5-10km        209.732807   154.0   2152
+>10km         165.533839   125.0   3295
+========================================================================
+STEP 3 - PREMIUM HOTSPOT DETECTION
+========================================================================
+Premium band: 200 - 1000 dollars per night.
+Premium listings: 3,078 (40.4 percent of total)
+Premium: DBSCAN finished. Clusters found (excluding noise): 32
+Top premium clusters (by average price):
+    cluster_id  listing_count   avg_price
+17          17             19  453.947368
+19          19             20  446.450000
+4            4            133  426.503759
+9            9             85  395.070588
+12          12             31  394.967742
+========================================================================
+STEP 3B - LUXURY HOTSPOT DETECTION
+========================================================================
+Luxury band: 1000 - 2500 dollars per night.
+Luxury listings: 109 (1.4 percent of total)
+Luxury: DBSCAN finished. Clusters found (excluding noise): 4
+Top luxury clusters (by average price):
+   cluster_id  listing_count    avg_price
+2           2              6  1652.500000
+0           0              7  1484.285714
+1           1             32  1412.062500
+3           3              6  1406.666667
+========================================================================
+STEP 3C - ULTRA LUXURY HOTSPOT DETECTION
+========================================================================
+Ultra Luxury band: 2500 - 5001 dollars per night.
+Ultra Luxury listings: 23 (0.3 percent of total)
+Ultra Luxury: DBSCAN finished. Clusters found (excluding noise): 3
+Top ultra luxury clusters (by average price):
+   cluster_id  listing_count    avg_price
+2           2              3  3933.333333
+0           0              4  3619.500000
+1           1              4  3414.000000
+========================================================================
+STEP 4 - NEIGHBORHOOD INVESTMENT SCORES
+========================================================================
+Top neighborhoods by investment score:
+                        investment_score       price  listing_count
+neighbourhood_cleansed                                             
+Near North Side                     75.4  406.068694            888
+Loop                                74.8  385.805804            448
+West Town                           72.0  305.905444            698
+Lincoln Park                        71.8  295.452555            274
+Lake View                           68.8  289.671371            496
+Near South Side                     65.4  312.271605            243
+Near West Side                      62.0  284.239564            551
+North Center                        59.8  218.922481            129
+Logan Square                        59.2  195.805063            395
+East Garfield Park                  58.0  168.109890             91
+========================================================================
+STEP 5 - MAP CREATION
+========================================================================
+Added heatmap with 5000 sample listings.
+Added 32 premium cluster markers.
+Added 4 luxury cluster markers.
+Added 3 ultra luxury cluster markers.
+Map saved to: maps\chicago_2025-06-17_min200.html
+========================================================================
+STEP 6 - EXPORTING CSV OUTPUTS
+========================================================================
+Saved main analyzed data to output\chicago_2025-06-17_min200_analyzed_data.csv
+Saved premium clusters to output\chicago_2025-06-17_min200_premium_clusters.csv
+Saved luxury clusters to output\chicago_2025-06-17_min200_luxury_clusters.csv
+Saved ultra luxury clusters to output\chicago_2025-06-17_min200_ultra_luxury_clusters.csv
+Saved neighborhood scores to output\chicago_2025-06-17_min200_neighborhood_scores.csv

@@ -1,0 +1,102 @@
+========================================================================
+AIRBNB PRICE HOTSPOT ANALYZER
+========================================================================
+========================================================================
+FETCHING LISTINGS FOR BARCELONA (barcelona)
+========================================================================
+========================================================================
+DETECTING LATEST SNAPSHOT
+========================================================================
+Loading index page: https://insideairbnb.com/get-the-data/
+Detected latest snapshot for Barcelona: 2025-09-14
+Using download URL: https://data.insideairbnb.com/spain/catalonia/barcelona/2025-09-14/data/listings.csv.gz
+OK - loaded 19,410 listings from snapshot 2025-09-14
+========================================================================
+STEP 1 - DATA PREPARATION
+========================================================================
+Converting price column to numeric dollars.
+Cleaned listings: 19,410 -> 15,261
+Price range: 9 - 5000 dollars per night
+Median price: 130 dollars per night
+========================================================================
+STEP 2 - LANDMARK PROXIMITY
+========================================================================
+Computing distance in meters to nearest landmark (this can take a while).
+Price by distance bucket (mean / median / count):
+                    mean  median  count
+distance_cat                           
+<2km          202.434481   164.0   3747
+2-5km         172.916290   123.0  10178
+5-10km        155.465169   102.0   1335
+>10km                NaN     NaN      0
+========================================================================
+STEP 3 - PREMIUM HOTSPOT DETECTION
+========================================================================
+Premium band: 200 - 1000 dollars per night.
+Premium listings: 4,220 (27.7 percent of total)
+Premium: DBSCAN finished. Clusters found (excluding noise): 6
+Top premium clusters (by average price):
+   cluster_id  listing_count   avg_price
+1           1            154  320.844156
+0           0           3741  315.162791
+2           2             13  265.307692
+5           5             10  243.500000
+3           3             36  237.777778
+========================================================================
+STEP 3B - LUXURY HOTSPOT DETECTION
+========================================================================
+Luxury band: 1000 - 2500 dollars per night.
+Luxury listings: 168 (1.1 percent of total)
+Luxury: DBSCAN finished. Clusters found (excluding noise): 6
+Top luxury clusters (by average price):
+   cluster_id  listing_count    avg_price
+4           4              7  1681.000000
+3           3             21  1464.428571
+1           1             48  1454.895833
+0           0              9  1389.555556
+5           5             11  1330.181818
+========================================================================
+STEP 3C - ULTRA LUXURY HOTSPOT DETECTION
+========================================================================
+Ultra Luxury band: 2500 - 5001 dollars per night.
+Ultra Luxury listings: 30 (0.2 percent of total)
+Ultra Luxury: DBSCAN finished. Clusters found (excluding noise): 4
+Top ultra luxury clusters (by average price):
+   cluster_id  listing_count    avg_price
+3           3              5  3611.400000
+0           0              3  3488.333333
+1           1              6  3000.000000
+2           2              4  2929.000000
+========================================================================
+STEP 4 - NEIGHBORHOOD INVESTMENT SCORES
+========================================================================
+Top neighborhoods by investment score:
+                                              investment_score       price  listing_count
+neighbourhood_cleansed                                                                   
+la Dreta de l'Eixample                                    88.4  248.528078           1941
+la Sagrada Família                                        85.6  190.756208            886
+el Camp de l'Arpa del Clot                                81.6  248.796875            256
+el Parc i la Llacuna del Poblenou                         79.8  181.920732            164
+Diagonal Mar i el Front Marítim del Poblenou              79.8  261.515625            128
+el Fort Pienc                                             79.6  178.732468            385
+el Camp d'en Grassot i Gràcia Nova                        78.7  144.291139            237
+Sant Antoni                                               75.2  219.028015            821
+la Vila de Gràcia                                         74.8  166.915957            940
+la Vila Olímpica del Poblenou                             74.3  229.328358            134
+========================================================================
+STEP 5 - MAP CREATION
+========================================================================
+Added heatmap with 5000 sample listings.
+Added 6 premium cluster markers.
+Added 6 luxury cluster markers.
+Added 4 ultra luxury cluster markers.
+Added 1 landmark markers.
+Map saved to: maps\barcelona_2025-09-14_min200.html
+========================================================================
+STEP 6 - EXPORTING CSV OUTPUTS
+========================================================================
+Saved main analyzed data to output\barcelona_2025-09-14_min200_analyzed_data.csv
+Saved premium clusters to output\barcelona_2025-09-14_min200_premium_clusters.csv
+Saved luxury clusters to output\barcelona_2025-09-14_min200_luxury_clusters.csv
+Saved ultra luxury clusters to output\barcelona_2025-09-14_min200_ultra_luxury_clusters.csv
+Saved neighborhood scores to output\barcelona_2025-09-14_min200_neighborhood_scores.csv

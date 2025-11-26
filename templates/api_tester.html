@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+  <h1 class="page-title">API Tester</h1>
+  <p class="page-subtitle">Send API requests directly from your browser.</p>
+</section>
+
+<section class="glass-panel card">
+  <label>API Endpoint</label>
+  <input id="tester-endpoint" class="input" value="/api/cities" />
+
+  <label>JSON Body (POST only)</label>
+  <textarea id="tester-body" class="input" rows="5">{}</textarea>
+
+  <button id="tester-send" class="btn btn-primary">Send Request</button>
+</section>
+
+<section class="glass-panel card">
+  <h3>Response</h3>
+  <pre id="tester-response">Click "Send Request" to begin.</pre>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/api_tester.js') }}"></script>
+{% endblock %}
