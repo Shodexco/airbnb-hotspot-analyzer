@@ -186,7 +186,7 @@ See **`CHANGELOG.md`**.
 
 # ⭐ Author
 
-Built by **Bayo (Shodexco)**  
+Built by **Jonathan Sodeke**  
 AI/ML Developer • Backend Engineer • Data Pipeline Architect  
 
 If you use this project, star the repo ⭐ — it helps!
