@@ -76,6 +76,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ------------------------------------
+  // Security: Escape HTML to prevent XSS
+  // ------------------------------------
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ------------------------------------
   // Parse CSV properly (handles quoted fields with commas)
   // ------------------------------------
   function parseCSVLine(line) {
@@ -111,24 +120,39 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ------------------------------------
-  // Convert CSV -> table
+  // Convert CSV -> table (with pagination and security)
   // ------------------------------------
-  function csvToTable(csv) {
-    const lines = csv.trim().split("\n");
+  function csvToTable(csv, maxRows = 1000) {
+    // Normalize line endings (handles Windows \r\n and Mac \r)
+    const normalized = csv.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = normalized.trim().split("\n");
+
     if (!lines.length) return "<p>No data.</p>";
 
     const rows = lines.map(line => parseCSVLine(line));
+    const totalRows = rows.length - 1; // Exclude header
+    const hasMore = totalRows > maxRows;
+    const displayRows = hasMore ? rows.slice(0, maxRows + 1) : rows;
 
-    let html = `<div class="table-wrapper"><table class="data-table">`;
+    let html = '';
 
-    rows.forEach((row, i) => {
+    // Show warning if data is truncated
+    if (hasMore) {
+      html += `<div style="padding: 12px; margin-bottom: 16px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; color: #856404;">
+        <strong>⚠️ Large Dataset:</strong> Showing first ${maxRows.toLocaleString()} of ${totalRows.toLocaleString()} rows for performance.
+      </div>`;
+    }
+
+    html += `<div class="table-wrapper"><table class="data-table">`;
+
+    displayRows.forEach((row, i) => {
       if (i === 0) {
         html += "<thead><tr>";
-        row.forEach((col) => (html += `<th>${col}</th>`));
+        row.forEach((col) => (html += `<th>${escapeHTML(col)}</th>`));
         html += "</tr></thead><tbody>";
       } else {
         html += "<tr>";
-        row.forEach((col) => (html += `<td>${col}</td>`));
+        row.forEach((col) => (html += `<td>${escapeHTML(col)}</td>`));
         html += "</tr>";
       }
     });
