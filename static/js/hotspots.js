@@ -76,11 +76,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ------------------------------------
+  // Parse CSV properly (handles quoted fields with commas)
+  // ------------------------------------
+  function parseCSVLine(line) {
+    const result = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i];
+      const nextChar = line[i + 1];
+
+      if (char === '"') {
+        if (inQuotes && nextChar === '"') {
+          // Escaped quote
+          current += '"';
+          i++; // Skip next quote
+        } else {
+          // Toggle quote state
+          inQuotes = !inQuotes;
+        }
+      } else if (char === ',' && !inQuotes) {
+        // Field separator
+        result.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+
+    // Add the last field
+    result.push(current.trim());
+    return result;
+  }
+
+  // ------------------------------------
   // Convert CSV -> table
   // ------------------------------------
   function csvToTable(csv) {
-    const rows = csv.trim().split("\n").map((r) => r.split(","));
-    if (!rows.length) return "<p>No data.</p>";
+    const lines = csv.trim().split("\n");
+    if (!lines.length) return "<p>No data.</p>";
+
+    const rows = lines.map(line => parseCSVLine(line));
 
     let html = `<div class="table-wrapper"><table class="data-table">`;
 
